@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var playerCard = "card5"
+    @State var cpuCard = "card9"
+    @State var playerScore = 0
+    @State var cpuScore = 0
+    
     var body: some View {
         ZStack {
             
@@ -20,14 +26,29 @@ struct ContentView: View {
                 
                 HStack{
                     Spacer()
-                    Image("card3")
+                    Image(playerCard)
                     Spacer()
-                    Image("card4")
+                    Image(cpuCard)
                     Spacer()
                 }
                 
                 Spacer()
-                Image("dealbutton")
+                Button {
+                    let playerRandomNum = Int.random(in: 2...14)
+                    let cpuRandomNum = Int.random(in: 2...14)
+                    
+                    playerCard = "card\(playerRandomNum)"
+                    cpuCard = "card\(cpuRandomNum)"
+                    
+                    if playerRandomNum > cpuRandomNum {
+                        playerScore += 1
+                    } else if playerRandomNum < cpuRandomNum {
+                        cpuScore += 1
+                    }
+                } label: {
+                    Image("dealbutton")
+                }
+
                 Spacer()
                 
                 HStack {
@@ -37,7 +58,7 @@ struct ContentView: View {
                             .foregroundColor(Color.white)
                             .font(.headline)
                             .padding(.bottom, 10.0)
-                        Text("0")
+                        Text("\(playerScore)")
                             .foregroundColor(Color.white)
                             .font(.largeTitle)
                     }
@@ -47,7 +68,7 @@ struct ContentView: View {
                             .foregroundColor(Color.white)
                             .font(.headline)
                             .padding(.bottom, 10.0)
-                        Text("0")
+                        Text("\(cpuScore)")
                             .foregroundColor(Color.white)
                             .font(.largeTitle)
                     }
